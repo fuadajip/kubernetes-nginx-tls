@@ -2,7 +2,6 @@
 Guide to install kubernetes nginx ingress controller with cert-manager
 
 ## Pre-requisites
----
 
 1. Install kubectl
     ```shell
@@ -49,7 +48,7 @@ properties:
 
 
 ## Create kubernetes cluster
----
+
 After project created now we can create our kubernetes clusters 
 ```shell
 gcloud container clusters create staging-avangers --num-nodes=1
@@ -63,7 +62,7 @@ kubectl get pods --all-namespaces
 ```
 
 ## Setup Nginx Ingress
----
+
 There are a lot of <b>Ingress Controller</b> out there like:
 * Contour based on Envoy by Heptio
 * Traefik by Containous
@@ -113,7 +112,7 @@ If the installation success you wil get output like this
 
 
 ## Create namespace, deployment and service in kubernetes
----
+
 ### 1. Create namespace
 The first thing is create a namespace four our application although kubernetes offer namespace named <code>default</code> by default it's more good practice if we define our own namespace based on needs.
 
@@ -273,7 +272,7 @@ kubectl get deployments -n staging
 
 
 ## Apply Nginx Ingress
----
+
 After our namespace, deployment and service is running up next we can apply nginx ingress to route into our service
 ```yml
 apiVersion: extensions/v1beta1
@@ -307,7 +306,7 @@ kubectl get ingress -n staging
 After it deployed you will get ip address for your then setup this ip address into your DNS management
 
 ## Setup Cert Manager
----
+
 We will follow guide from official cert-manager documentation <a href="https://docs.cert-manager.io/en/latest/getting-started/index.html" target="_blank">here</a>
 
 ### 1. Craete a namespace for cert-manager
