@@ -70,7 +70,7 @@ There are a lot of <b>Ingress Controller</b> out there like:
 * Kong by Kong HQ
 * etc
   
-In this guide we will using nginx as our ingress controller. The simple diagram about ingress controller like in this diagram below
+In this guide we will using nginx as our ingress controller. The simple diagram about ingress controller like in this diagram below that i create to simplify the explanation:
 
 <div style="text-align:center">
 <img src="./img/nginx-ingress-simple-diagram.png" alt="nginx-ingress-simple-diagram.png">
