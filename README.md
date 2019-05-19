@@ -367,3 +367,57 @@ EOF
 # Create the test resources
 kubectl apply -f test-resources.yaml
 ```
+
+## Issuing an ACME certificate using HTTP validation
+The ACME protocol supports various challenge mechanisms which are used to prove ownership of a domain so that a valid certificate can be issued for that domain.
+
+One such challenge mechanism is the HTTP-01 challenge. With a HTTP-01 challenge, you prove ownership of a domain by ensuring that a particular file is present at the domain. It is assumed that you control the domain if you are able to publish the given file under a given path.
+
+```yml
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Issuer
+metadata:
+  name: letsencrypt-staging
+  namespace: staging
+spec:
+  acme:
+    # The ACME server URL
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    # Email address used for ACME registration
+    email: user@example.com
+    # Name of a secret used to store the ACME account private key
+    privateKeySecretRef:
+      name: letsencrypt-staging
+    # Enable the HTTP-01 challenge provider
+    http01: {}
+---
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: example-com
+  namespace: staging
+spec:
+  secretName: example-com-tls
+  issuerRef:
+    name: letsencrypt-staging
+  commonName: example.com
+  dnsNames:
+  - www.example.com
+  acme:
+    config:
+    - http01:
+        ingressClass: nginx
+      domains:
+      - example.com
+    - http01:
+        ingress: my-ingress
+      domains:
+      - www.example.com
+```
+
+As you can see we are using staging acme server url
+```code
+server: https://acme-staging-v02.api.letsencrypt.org/directory
+```
+
+To move to production, simply create a new Issuer with the URL set to https://acme-v02.api.letsencrypt.org/directory
